@@ -21,7 +21,7 @@ pub mod u8 {
     }
 }
 
-macro_rules! unsigned_inner {
+macro_rules! generate_inner {
     ($in:ident, $out:ident) => {
         pub mod $out {
             pub fn sqrt(x: $in) -> $out {
@@ -41,18 +41,18 @@ macro_rules! unsigned_inner {
         }
     };
 }
-macro_rules! unsigned {
+macro_rules! generate {
     ($in:ident) => {
         pub mod $in {
-            unsigned_inner!($in, f32);
-            unsigned_inner!($in, f64);
+            generate_inner!($in, f32);
+            generate_inner!($in, f64);
         }
     };
 }
-unsigned!(u16);
-unsigned!(u32);
-unsigned!(u64);
-unsigned!(u128);
+generate!(u16);
+generate!(u32);
+generate!(u64);
+generate!(u128);
 
 #[cfg(test)]
 mod test {
