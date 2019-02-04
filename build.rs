@@ -31,11 +31,11 @@ fn generate(path: &Path) -> io::Result<()> {
     }))?;
     f.write_all(&part("INV_SQRT_F32", "f32", 256, |x| match x {
         0 => "::std::f32::INFINITY".to_string(),
-        non_zero => format!("{:.64}", 1. / (non_zero as f32).sqrt()),
+        non_zero => format!("{:.64}", (non_zero as f32).sqrt().recip()),
     }))?;
     f.write_all(&part("INV_SQRT_F64", "f64", 256, |x| match x {
         0 => "::std::f64::INFINITY".to_string(),
-        non_zero => format!("{:.64}", 1. / (non_zero as f64).sqrt()),
+        non_zero => format!("{:.64}", (non_zero as f64).sqrt().recip()),
     }))?;
     Ok(())
 }

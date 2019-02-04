@@ -35,7 +35,7 @@ macro_rules! generate_inner {
                 if x < 256 {
                     crate::u8::$out::inv_sqrt(x as u8)
                 } else {
-                    1. / (x as $out).sqrt()
+                    (x as $out).sqrt().recip()
                 }
             }
         }
@@ -62,9 +62,9 @@ mod test {
             fn $in() {
                 for x in 0..$count {
                     assert_eq!((x as f32).sqrt(), crate::$in::f32::sqrt(x as $in));
-                    assert_eq!(1. / (x as f32).sqrt(), crate::$in::f32::inv_sqrt(x as $in));
+                    assert_eq!((x as f32).sqrt().recip(), crate::$in::f32::inv_sqrt(x as $in));
                     assert_eq!((x as f64).sqrt(), crate::$in::f64::sqrt(x as $in));
-                    assert_eq!(1. / (x as f64).sqrt(), crate::$in::f64::inv_sqrt(x as $in));
+                    assert_eq!((x as f64).sqrt().recip(), crate::$in::f64::inv_sqrt(x as $in));
                 }
             }
         };
@@ -74,4 +74,10 @@ mod test {
     test!(u32, 1024);
     test!(u64, 1024);
     test!(u128, 1024);
+
+    #[test]
+    fn specific_values() {
+        assert_eq!(crate::u8::f32::sqrt(16), 4.);
+        assert_eq!(crate::u8::f32::inv_sqrt(16), 0.25);
+    }
 }
