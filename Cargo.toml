@@ -11,3 +11,10 @@ documentation = "https://docs.rs/memo_int_sqrt"
 build = "build.rs"
 
 [dependencies]
+
+[dev-dependencies]
+criterion = "0.2"
+
+[[bench]]
+name = "bench"
+harness = false
